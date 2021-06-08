@@ -8,6 +8,11 @@ const logger = (req, res, next) => {
   next();
 };
 
+const timeStamp = (req, res, next) => {
+  req.time = new Date().toString();
+  next();
+};
+
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.get("/", logger, (req, res) => {
@@ -20,6 +25,10 @@ app.get("/json", logger, (req, res) => {
   message =
     process.env.MESSAGE_STYLE == "uppercase" ? message.toUpperCase() : message;
   res.send({ message });
+});
+
+app.get("/now", timeStamp, (req, res) => {
+  res.send({ time: req.time });
 });
 
 module.exports = app;
