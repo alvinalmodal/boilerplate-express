@@ -31,4 +31,9 @@ app.get("/now", timeStamp, (req, res) => {
   res.send({ time: req.time });
 });
 
+app.get("/:word/echo", (req, res) => {
+  let { word } = req.params;
+  res.send({ echo: word });
+});
+
 module.exports = app;
