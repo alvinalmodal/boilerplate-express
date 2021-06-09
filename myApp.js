@@ -3,6 +3,9 @@ var express = require("express");
 var path = require("path");
 var app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const logger = (req, res, next) => {
   console.log(`${req.method} ${req.path} - ${req.ip}`);
   next();
@@ -35,5 +38,16 @@ app.get("/:word/echo", (req, res) => {
   let { word } = req.params;
   res.send({ echo: word });
 });
+
+app
+  .route("/name")
+  .get((req, res) => {
+    let { first, last } = req.query;
+    res.send({ name: `${first} ${last}` });
+  })
+  .post((req, res) => {
+    const { first, last } = req.body;
+    res.send({ name: `${first} ${last}` });
+  });
 
 module.exports = app;
