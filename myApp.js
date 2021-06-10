@@ -1,10 +1,11 @@
 require("dotenv").config();
 var express = require("express");
+const bodyParser = require("body-parser");
 var path = require("path");
 var app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 const logger = (req, res, next) => {
   console.log(`${req.method} ${req.path} - ${req.ip}`);
